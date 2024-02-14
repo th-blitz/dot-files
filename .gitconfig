@@ -1,0 +1,8 @@
+[user]
+	name = "!github_user_name" 
+	email = "!github_email_address"
+[alias]
+	lg = log --decorate --graph --pretty=tformat:'%C(dim white)%m%C(dim green)%h %C(dim cyan)%cd %C(yellow)%<(12,trunc)%aN %C(reset)%s%C(auto)%w(0,0,9)%+d%C(reset)' --decorate --graph
+[log]
+     date = format:%Y-%m-%d %H:%M
+
