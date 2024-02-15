@@ -36,8 +36,8 @@ else
 	fi
 
 	if [[ $yn = "y" ]]; then
-
-		temp=$(pwd)	
+		
+		temp=$(pwd)
 		cd $apps
 		git clone https://github.com/neovim/neovim.git
 		cd neovim
@@ -46,9 +46,36 @@ else
 		make install
 		"source $apps/neovim/bin" >> ~/.bashrc
 		source $apps/neovim/bin
-		cd $temp
-		NVIM_FLAG="true"
 
+		NVIM_FLAG="true"
+		
+		packsite=~/.local/share/nvim/site/pack/dot-files/start/
+
+		if [[ ! -d $packsite ]]; then	
+			mkdir -p $packsite
+		fi
+
+		cd $packsite
+		
+		if [[ -d $packsite/nvim-treesitter ]]; then
+			echo "[ - ] removing $packsite/nvim-treesitter"
+			rm -r $packsite/nvim-treesitter
+		fi
+
+		git clone https://github.com/nvim-treesitter/nvim-treesitter.git
+			
+		if [[ ! -d "~/.config/nvim/" ]]; then
+			echo "[ - ] creating directory ~/.config/nvim/"
+			mkdir -p ~/.config/nvim/
+		fi
+
+		unlink ~/.config/nvim/init.lua
+
+		ln -s $temp/init.lua ~/.config/nvim/init.lua
+		
+		cd $temp
+
+		echo "[ ok ] installed neovim."
 	else
 		echo "[ ok ] NOT installing neovim"
 	fi
