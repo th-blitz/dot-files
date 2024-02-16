@@ -2,6 +2,10 @@
 vim.wo.number = true
 vim.wo.relativenumber = true
 
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+	
+
 -- from nvim-treesitter readme repo:
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)

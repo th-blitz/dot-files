@@ -44,7 +44,7 @@ else
 		git checkout stable
 		make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$apps/neovim
 		make install
-		"source $apps/neovim/bin" >> ~/.bashrc
+
 		source $apps/neovim/bin
 
 		NVIM_FLAG="true"
