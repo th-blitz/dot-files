@@ -4,15 +4,15 @@ NVIM_FLAG="false"
 
 if [[ -z "${apps+x}" ]]; then
 
-	echo 'err : no $apps'
+	echo '[ not ok ! ] no $apps'
 
 elif [[ -z "$apps" ]]; then
 
-	echo 'err : empty $apps'
+	echo '[ not ok ! ] empty $apps'
 
 elif [[ ! -d $apps ]]; then
 
-	echo 'err : directory $apps does not exist'
+	echo '[ not ok ! ] directory $apps does not exist'
 	
 else 
 	yn=""
