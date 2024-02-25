@@ -10,9 +10,9 @@ elif [[ -z "$apps" ]]; then
 
 	echo '[ not ok ! ] empty $apps'
 
-elif [[ ! -d $apps ]]; then
+elif [[ ! -d "$apps" ]]; then
 
-	echo '[ not ok ! ] directory $apps does not exist'
+	echo "[ not ok ! ] directory $apps does not exist"
 	
 else 
 	yn=""
