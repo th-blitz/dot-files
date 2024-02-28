@@ -46,6 +46,7 @@ else
 		make install
 
 		source $apps/neovim/bin
+		echo "source $apps/neovim/bin" >> ~/.bashrc
 
 		NVIM_FLAG="true"
 		

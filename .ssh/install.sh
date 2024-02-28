@@ -18,8 +18,13 @@ if [ $yn = "y" ] || [ $yn = "@" ]; then
 
 	cp config ~/.ssh/config
 
-	if [ -z ${ssh_nyu_user+x} ]; then echo '[ not ok ! ] $ssh_nyu_user='' is unset'; else sed -i "s/User ssh_nyu_user/User $ssh_nyu_user/g"  ~/.ssh/config; fi 
-	
+	source ../.secrets/ssh.secrets
+
+	for word in "${SSH_VARS[@]}"; do
+		echo "${word} | ${!word}" 
+		sed -i "s:${word}:${!word}:g" ~/.ssh/config
+	done
+
 	echo "[ ok ] installed .ssh/config"
 
 fi
