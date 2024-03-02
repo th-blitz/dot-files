@@ -63,6 +63,14 @@ else
 		fi
 
 		git clone https://github.com/nvim-treesitter/nvim-treesitter.git
+
+        if [[ -d "$packsite/catppuccin" ]]; then
+            echo "[ - ] removing $packsite/catppuccin"
+            rm -r "$packsite/catppuccin"
+        fi
+
+        git clone https://github.com/catppuccin/nvim.git
+        mv nvim catppuccin
 			
 		if [[ ! -d "~/.config/nvim/" ]]; then
 			echo "[ - ] creating directory ~/.config/nvim/"
