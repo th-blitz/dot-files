@@ -61,17 +61,25 @@ else
 			echo "[ - ] removing $packsite/nvim-treesitter"
 			rm -r $packsite/nvim-treesitter
 		fi
+        
+        treesitter='https://github.com/nvim-treesitter/nvim-treesitter.git'
+        catppuccin='https://github.com/catppuccin/nvim.git'
+        NVIM_PACKS=(
+            treesitter
+            catppuccin
+        )
+        
+        for pack in "${NVIM_PACKS[@]}"; do
+            echo "[ - ] installing nvim package ${pack} from ${!pack}"
+            if [[ -d "$packsite/$pack" ]]; then
+                echo "[ - ] removing existing $packsite/$pack"
+                rm -r "$packsite/$pack"
+            fi
 
-		git clone https://github.com/nvim-treesitter/nvim-treesitter.git
+            git clone ${!pack} ${pack}
 
-        if [[ -d "$packsite/catppuccin" ]]; then
-            echo "[ - ] removing $packsite/catppuccin"
-            rm -r "$packsite/catppuccin"
-        fi
+        done
 
-        git clone https://github.com/catppuccin/nvim.git
-        mv nvim catppuccin
-			
 		if [[ ! -d "~/.config/nvim/" ]]; then
 			echo "[ - ] creating directory ~/.config/nvim/"
 			mkdir -p ~/.config/nvim/
