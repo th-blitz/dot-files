@@ -1,7 +1,5 @@
 #!/bin/bash
 
-NVIM_FLAG="false"
-
 if [[ -z "${apps+x}" ]]; then
 
 	echo '[ not ok ! ] no $apps'
@@ -23,7 +21,7 @@ else
 	
 		if [[ $yn = "y" ]]; then
 			echo "[ ok ] removing neovim installation at $apps/neovim"
-			rm -r $apps/neovim
+			rm -rf $apps/neovim
 			echo "[ ok ] re-installing neovim"
 		fi
 	else
@@ -55,25 +53,21 @@ else
 			mkdir -p $packsite
 		fi
 
-		cd $packsite
-		
-		if [[ -d $packsite/nvim-treesitter ]]; then
-			echo "[ - ] removing $packsite/nvim-treesitter"
-			rm -r $packsite/nvim-treesitter
-		fi
-        
-        treesitter='https://github.com/nvim-treesitter/nvim-treesitter.git'
-        catppuccin='https://github.com/catppuccin/nvim.git'
+        TreeSitter='https://github.com/nvim-treesitter/nvim-treesitter.git'
+        Catppuccin='https://github.com/catppuccin/nvim.git'
+        Vim_Smoothie='https://github.com/psliwka/vim-smoothie'
+
         NVIM_PACKS=(
-            treesitter
-            catppuccin
+            TreeSitter
+            Catppuccin
+            Vim_Smoothie 
         )
         
         for pack in "${NVIM_PACKS[@]}"; do
             echo "[ - ] installing nvim package ${pack} from ${!pack}"
-            if [[ -d "$packsite/$pack" ]]; then
+           if [[ -d "$packsite/$pack" ]]; then
                 echo "[ - ] removing existing $packsite/$pack"
-                rm -r "$packsite/$pack"
+                rm -rf "$packsite/$pack"
             fi
 
             git clone ${!pack} ${pack}
