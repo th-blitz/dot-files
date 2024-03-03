@@ -56,16 +56,20 @@ else
         TreeSitter='https://github.com/nvim-treesitter/nvim-treesitter.git'
         Catppuccin='https://github.com/catppuccin/nvim.git'
         Vim_Smoothie='https://github.com/psliwka/vim-smoothie'
+        Vim_Tree='https://github.com/nvim-tree/nvim-tree.lua'
+        Web_Dev_Icons='https://github.com/nvim-tree/nvim-web-devicons'
 
         NVIM_PACKS=(
             TreeSitter
             Catppuccin
             Vim_Smoothie 
+            Vim_Tree
+            Web_Dev_Icons
         )
         
         for pack in "${NVIM_PACKS[@]}"; do
             echo "[ - ] installing nvim package ${pack} from ${!pack}"
-           if [[ -d "$packsite/$pack" ]]; then
+            if [[ -d "$packsite/$pack" ]]; then
                 echo "[ - ] removing existing $packsite/$pack"
                 rm -rf "$packsite/$pack"
             fi
