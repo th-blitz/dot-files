@@ -12,3 +12,4 @@ if [[ ! -f ~/secrets.config ]]; then
 else
 	source ~/secrets.config
 fi
+

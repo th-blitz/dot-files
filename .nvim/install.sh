@@ -42,41 +42,45 @@ else
 		git checkout stable
 		make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$apps/neovim
 		make install
+       
+       
+		vimbin="PATH=$apps/neovim/bin"
+       	echo "PATH=$vimbin:\$PATH" >> ~/.bashrc
 
-		source $apps/neovim/bin
-
-		NVIM_FLAG="true"
-		
 		packsite=~/.local/share/nvim/site/pack/dot-files/start/
 
 		if [[ ! -d $packsite ]]; then	
 			mkdir -p $packsite
 		fi
 
-        TreeSitter='https://github.com/nvim-treesitter/nvim-treesitter.git'
-        Catppuccin='https://github.com/catppuccin/nvim.git'
-        Vim_Smoothie='https://github.com/psliwka/vim-smoothie'
-        Vim_Tree='https://github.com/nvim-tree/nvim-tree.lua'
-        Web_Dev_Icons='https://github.com/nvim-tree/nvim-web-devicons'
+       TreeSitter='https://github.com/nvim-treesitter/nvim-treesitter.git'
+       Catppuccin='https://github.com/catppuccin/nvim.git'
+       VimSmoothie='https://github.com/psliwka/vim-smoothie.git'
+       VimTree='https://github.com/nvim-tree/nvim-tree.lua.git'
+       WebDevIcons='https://github.com/nvim-tree/nvim-web-devicons.git'
+	   IndentBlankLine='https://github.com/lukas-reineke/indent-blankline.nvim.git'
+	   Kanagawa='https://github.com/rebelot/kanagawa.nvim.git'
 
         NVIM_PACKS=(
             TreeSitter
             Catppuccin
-            Vim_Smoothie 
-            Vim_Tree
-            Web_Dev_Icons
+            VimSmoothie 
+            VimTree
+            WebDevIcons
+			IndentBlankLine
+			Kanagawa
         )
         
-        for pack in "${NVIM_PACKS[@]}"; do
-            echo "[ - ] installing nvim package ${pack} from ${!pack}"
-            if [[ -d "$packsite/$pack" ]]; then
+		for pack in "${NVIM_PACKS[@]}"; do
+       	   echo "[ - ] installing nvim package ${pack} from ${!pack}"
+          if [[ -d "$packsite/$pack" ]]; then
                 echo "[ - ] removing existing $packsite/$pack"
                 rm -rf "$packsite/$pack"
-            fi
+          fi
 
-            git clone ${!pack} ${pack}
+           git clone ${!pack} ${pack}
 
-        done
+       done
 
 		if [[ ! -d "~/.config/nvim/" ]]; then
 			echo "[ - ] creating directory ~/.config/nvim/"
