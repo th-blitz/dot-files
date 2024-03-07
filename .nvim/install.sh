@@ -75,7 +75,7 @@ else
        	   echo "[ - ] installing nvim package ${pack} from ${!pack}"
           if [[ -d "$packsite/$pack" ]]; then
                 echo "[ - ] removing existing $packsite/$pack"
-                rm -rf "$packsite/$pack"
+                rm -rf "$packsite/$packsite/$pack"
           fi
 
            git clone ${!pack} ${pack}

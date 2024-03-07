@@ -13,3 +13,4 @@ else
 	source ~/secrets.config
 fi
 
+PATH=PATH=/Users/preeth-raksh/apps/neovim/bin:$PATH
