@@ -78,7 +78,7 @@ else
                 rm -rf "$packsite/$packsite/$pack"
           fi
 
-           git clone ${!pack} ${pack}
+           git clone ${!pack} $packsite/$pack
 
        done
 
