@@ -143,7 +143,7 @@ require("nvim-tree").setup({
     sorter = "case_sensitive",
   },
   view = {
-    width = 30,
+    width = 24,
   },
   renderer = {
     group_empty = true,
@@ -198,4 +198,5 @@ vim.o.cindent = true
 vim.opt.wrap = false
 vim.o.splitright = true
 vim.o.splitbelow = true
-	
+
+require("toggleterm").setup()

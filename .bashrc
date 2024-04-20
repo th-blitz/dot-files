@@ -15,3 +15,4 @@ fi
 
 PATH=PATH=/Users/preeth-raksh/apps/neovim/bin:$PATH
 PATH=PATH=/Users/preeth-raksh/apps/neovim/bin:$PATH
+PATH=PATH=/Users/preeth-raksh/apps/neovim/bin:$PATH
