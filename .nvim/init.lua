@@ -1,5 +1,14 @@
 
 
+----------------------------------------------------------------------------------------------------
+-- Author Preetham Rakshith (c) 2024.
+-- github profile : github.com/th-blitz
+-- My personal nvim config file. 
+----------------------------------------------------------------------------------------------------
+
+USER_DIR = "/Users/preeth-raksh"
+
+
 -- from nvim-treesitter readme repo:
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
@@ -143,7 +152,7 @@ require("nvim-tree").setup({
     sorter = "case_sensitive",
   },
   view = {
-    width = 30,
+    width = 24,
   },
   renderer = {
     group_empty = true,
@@ -181,15 +190,20 @@ require('kanagawa').setup({
     },
 })
 
--- setup must be called before loading
+-- setup must be called before loading;
 vim.cmd("colorscheme kanagawa-wave")
+
+-- toggle term;
+require("toggleterm").setup()
+
+----------------------------------------------------------------------------------------------------
 
 vim.wo.number = true
 vim.wo.relativenumber = true
 
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
-vim.o.expandtab = false 
+vim.o.expandtab = true
 
 vim.o.autoindent = true
 vim.o.smartindent = true
@@ -198,4 +212,40 @@ vim.o.cindent = true
 vim.opt.wrap = false
 vim.o.splitright = true
 vim.o.splitbelow = true
-	
+
+----------------------------------------------------------------------------------------------------
+-- source : https://toddknutson.bio/posts/how-to-enable-neovim-undo-backup-and-swap-files-when-switching-linux-groups/
+-- purpose of this block : To create backups, swap files and persistent undo capabilities for edited files in nvim.
+
+BACKUP_DIR = USER_DIR .. "/.backups/nvim/backup/"
+SWAP_DIR = USER_DIR .. "/.backups/nvim/swap/"
+UNDO_DIR = USER_DIR .. "/.backups/nvim/undo/"
+
+if vim.fn.isdirectory(SWAP_DIR) == 0 then
+	vim.fn.mkdir(SWAP_DIR, "p", "0o700")
+end
+
+if vim.fn.isdirectory(BACKUP_DIR) == 0 then
+	vim.fn.mkdir(BACKUP_DIR, "p", "0o700")
+end
+
+if vim.fn.isdirectory(UNDO_DIR) == 0 then
+	vim.fn.mkdir(UNDO_DIR, "p", "0o700")
+end
+
+vim.opt.directory = SWAP_DIR
+vim.opt.backupdir = BACKUP_DIR
+vim.opt.undodir = UNDO_DIR
+
+vim.opt.swapfile = true
+vim.opt.backup = true
+vim.opt.undofile = true
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	callback = function()
+		local extension = "~" .. vim.fn.strftime("%Y-%m-%d-%H%M%S")
+		vim.o.backupext = extension
+	end,
+})
+
+----------------------------------------------------------------------------------------------------
