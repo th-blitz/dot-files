@@ -222,15 +222,15 @@ SWAP_DIR = USER_DIR .. "/.backups/nvim/swap/"
 UNDO_DIR = USER_DIR .. "/.backups/nvim/undo/"
 
 if vim.fn.isdirectory(SWAP_DIR) == 0 then
-	vim.fn.mkdir(SWAP_DIR, "p", "0o700")
+    vim.fn.mkdir(SWAP_DIR, "p", "0o700")
 end
 
 if vim.fn.isdirectory(BACKUP_DIR) == 0 then
-	vim.fn.mkdir(BACKUP_DIR, "p", "0o700")
+    vim.fn.mkdir(BACKUP_DIR, "p", "0o700")
 end
 
 if vim.fn.isdirectory(UNDO_DIR) == 0 then
-	vim.fn.mkdir(UNDO_DIR, "p", "0o700")
+    vim.fn.mkdir(UNDO_DIR, "p", "0o700")
 end
 
 vim.opt.directory = SWAP_DIR
@@ -242,10 +242,10 @@ vim.opt.backup = true
 vim.opt.undofile = true
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	callback = function()
-		local extension = "~" .. vim.fn.strftime("%Y-%m-%d-%H%M%S")
-		vim.o.backupext = extension
-	end,
+    callback = function()
+        local extension = "~" .. vim.fn.strftime("%Y-%m-%d-%H%M%S")
+        vim.o.backupext = extension
+    end,
 })
 
 ----------------------------------------------------------------------------------------------------
