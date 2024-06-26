@@ -12,7 +12,7 @@ USER_DIR = "/Users/preeth-raksh"
 -- from nvim-treesitter readme repo:
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "c", "rust", "cpp", "python", "lua", "vim", "vimdoc", "query" },
+  ensure_installed = { "c", "rust", "cpp", "python", "lua", "vim", "vimdoc", "query", "hcl", "terraform", "bash" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -53,57 +53,57 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
---require("catppuccin").setup({
---    flavour = "mocha", -- latte, frappe, macchiato, mocha
---    background = { -- :h background
---        light = "latte",
---        dark = "mocha",
---    },
---    transparent_background = false, -- disables setting the background color.
---    show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
---    term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
---    dim_inactive = {
---        enabled = false, -- dims the background color of inactive window
---        shade = "dark",
---        percentage = 0.15, -- percentage of the shade to apply to the inactive window
---    },
---    no_italic = false, -- Force no italic
---    no_bold = false, -- Force no bold
---    no_underline = false, -- Force no underline
---    styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
---        comments = { "italic" }, -- Change the style of comments
---        conditionals = { "italic" },
---        loops = {},
---        functions = {},
---        keywords = {},
---        strings = {},
---        variables = {},
---        numbers = {},
---        booleans = {},
---        properties = {},
---        types = {},
---        operators = {},
---        -- miscs = {}, -- Uncomment to turn off hard-coded styles
---    },
---    color_overrides = {},
---    custom_highlights = {},
---    integrations = {
---        cmp = true,
---        gitsigns = true,
---        nvimtree = true,
---        treesitter = true,
---        notify = false,
---        mini = {
---            enabled = true,
---            indentscope_color = "",
---        },
---        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
---    },
---})
---
----- setup must be called before loading
---vim.cmd.colorscheme "catppuccin-mocha"
---
+-- require("catppuccin").setup({
+--     flavour = "mocha", -- latte, frappe, macchiato, mocha
+--     background = { -- :h background
+--         light = "latte",
+--         dark = "mocha",
+--     },
+--     transparent_background = false, -- disables setting the background color.
+--     show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+--     term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+--     dim_inactive = {
+--         enabled = false, -- dims the background color of inactive window
+--         shade = "dark",
+--         percentage = 0.15, -- percentage of the shade to apply to the inactive window
+--     },
+--     no_italic = false, -- Force no italic
+--     no_bold = false, -- Force no bold
+--     no_underline = false, -- Force no underline
+--     styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+--         comments = { "italic" }, -- Change the style of comments
+--         conditionals = { "italic" },
+--         loops = {},
+--         functions = {},
+--         keywords = {},
+--         strings = {},
+--         variables = {},
+--         numbers = {},
+--         booleans = {},
+--         properties = {},
+--         types = {},
+--         operators = {},
+--         -- miscs = {}, -- Uncomment to turn off hard-coded styles
+--     },
+--     color_overrides = {},
+--     custom_highlights = {},
+--     integrations = {
+--         cmp = true,
+--         gitsigns = true,
+--         nvimtree = true,
+--         treesitter = true,
+--         notify = false,
+--         mini = {
+--             enabled = true,
+--             indentscope_color = "",
+--         },
+--         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+--     },
+-- })
+-- 
+-- -- setup must be called before loading
+-- vim.cmd.colorscheme "catppuccin-mocha"
+-- 
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
  -- you can specify color or cterm_color instead of specifying both of them
@@ -173,7 +173,7 @@ require('kanagawa').setup({
     keywordStyle = { italic = true},
     statementStyle = { bold = true },
     typeStyle = {},
-    transparent = false,         -- do not set background color
+    transparent = true,         -- do not set background color
     dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
     terminalColors = true,       -- define vim.g.terminal_color_{0,17}
     colors = {                   -- add/modify theme and palette colors
@@ -183,15 +183,18 @@ require('kanagawa').setup({
     overrides = function(colors) -- add/modify highlights
         return {}
     end,
-    theme = "wave",              -- Load "wave" theme when 'background' option is not set
+    -- theme = "wave",              -- Load "wave" theme when 'background' option is not set
     background = {               -- map the value of 'background' option to a theme
-        dark = "wave",           -- try "dragon" !
-        light = "lotus"
+       dark = "wave",           -- try "dragon" !
+       light = "lotus"
     },
 })
 
 -- setup must be called before loading;
-vim.cmd("colorscheme kanagawa-wave")
+vim.cmd("colorscheme kanagawa")
+
+-- setup lualine;
+require('lualine').setup()
 
 -- toggle term;
 require("toggleterm").setup()
@@ -251,11 +254,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 ----------------------------------------------------------------------------------------------------
 -- lsp setup.
 -- https://vonheikemen.github.io/devlog/tools/neovim-lsp-client-guide/
+-- purpose of the script : Manage LSP.
 
 vim.lsp.set_log_level('debug')
 vim.opt.signcolumn = 'yes'
-
-vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
 
 -- you can add this in your init.lua
 -- (note: diagnostics are not exclusive to LSP)
@@ -314,4 +316,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
   end
 })
+
+vim.opt.completeopt = { "menu", "menuone", "noselect" }  -- Add other options you need, but omit 'preview'
+
+----------------------------------------------------------------------------------------------------
 

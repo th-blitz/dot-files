@@ -60,6 +60,8 @@ else
         WebDevIcons='https://github.com/nvim-tree/nvim-web-devicons.git'
         IndentBlankLine='https://github.com/lukas-reineke/indent-blankline.nvim.git'
         Kanagawa='https://github.com/rebelot/kanagawa.nvim.git'
+        Lualine='https://github.com/nvim-lualine/lualine.nvim'
+        UndoTree='https://github.com/mbbill/undotree.git'
         
         NVIM_PACKS=(
             TreeSitter
@@ -69,6 +71,8 @@ else
             WebDevIcons
             IndentBlankLine
             Kanagawa
+            Lualine
+            UndoTree
         )
         
         for pack in "${NVIM_PACKS[@]}"; do
