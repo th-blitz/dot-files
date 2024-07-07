@@ -109,7 +109,10 @@ else
                 mv nvim "$HOME/.config/nvim"
             fi
         fi
-        
+
+        export_path_var="export PATH=${apps}/neovim/bin"
+        path_var=':$PATH'
+        echo "${export_path_var}${path_var}" >> $HOME/.bashrc
         
         echo "[ ok ] installed neovim."
     else
