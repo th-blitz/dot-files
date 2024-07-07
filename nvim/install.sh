@@ -85,17 +85,19 @@ else
             echo "[ - ] installing nvim package ${pack} from ${!pack}"
             if [[ -d "$packsite/$pack" ]]; then
                 echo "[ - ] removing existing $packsite/$pack"
-                rm -rf "${packsite}/${packsite}/${pack}"
+                rm -rf "$packsite/$packsite/$pack"
             fi
             
             git clone ${!pack} $packsite/$pack
             
         done
         
+        cd "$temp"
+
         yn=""
         if [[ ! -d "$HOME/.config/nvim" ]]; then
             echo "[ - ] moving directory nvim/nvim/ to ~/.config/nvim/"
-            mv nvim "$HOME/.config/nvim"
+            mv -r nvim/ "$HOME/.config/nvim"
         else
             read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
             if [[ $yn = "y" ]]; then
@@ -106,7 +108,6 @@ else
             fi
         fi
         
-        cd "$temp"
         
         echo "[ ok ] installed neovim."
     else
