@@ -13,7 +13,7 @@
 #
 apps=$1
 echo "[ .. ] installing .nvim" 
-cd .nvim && source ./install.sh && cd ..
+cd nvim && source ./install.sh && cd ..
 echo " "
 #
 #echo "[ .. ] installing .ssh" 
