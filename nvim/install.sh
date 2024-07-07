@@ -65,6 +65,7 @@ else
         Plenary='https://github.com/nvim-lua/plenary.nvim.git' 
         Telescope='https://github.com/nvim-telescope/telescope.nvim.git'
         ToggleTerm='https://github.com/akinsho/toggleterm.nvim.git'
+        LspConfig='https://github.com/neovim/nvim-lspconfig.git'
 
         NVIM_PACKS=(
             TreeSitter
@@ -79,13 +80,14 @@ else
             Plenary
             Telescope
             ToggleTerm
+            LspConfig
         )
         
         for pack in "${NVIM_PACKS[@]}"; do
             echo "[ - ] installing nvim package ${pack} from ${!pack}"
             if [[ -d "$packsite/$pack" ]]; then
-                echo "[ - ] removing existing $packsite/$pack"
-                rm -rf "$packsite/$packsite/$pack"
+                echo "[ - ] removing existing ${packsite}${pack}"
+                rm -rf "${packsite}${pack}"
             fi
             
             git clone ${!pack} $packsite/$pack
@@ -102,7 +104,7 @@ else
             read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
             if [[ $yn = "y" ]]; then
                 echo "[ ok ] removing ~/config/nvim/ permanently"
-                rm -rf "${apps}/neovim"
+                rm -rf "$HOME/.config/nvim"
                 echo "[ ok ] moving nvim/nvim/ to ~/config/nvim/"
                 mv nvim "$HOME/.config/nvim"
             fi
