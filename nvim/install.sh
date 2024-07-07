@@ -47,7 +47,7 @@ else
         vimbin="PATH=$apps/neovim/bin"
         echo "PATH=$vimbin:\$PATH" >> ~/.bashrc
         
-        packsite=~/.local/share/nvim/site/pack/dot-files/start/
+        packsite="$HOME/.local/share/nvim/site/pack/dot-files/start/"
         
         if [[ ! -d $packsite ]]; then   
             mkdir -p $packsite
@@ -64,6 +64,7 @@ else
         UndoTree='https://github.com/mbbill/undotree.git'
         Plenary='https://github.com/nvim-lua/plenary.nvim.git' 
         Telescope='https://github.com/nvim-telescope/telescope.nvim.git'
+        ToggleTerm='https://github.com/akinsho/toggleterm.nvim.git'
 
         NVIM_PACKS=(
             TreeSitter
@@ -77,27 +78,33 @@ else
             UndoTree
             Plenary
             Telescope
+            ToggleTerm
         )
         
         for pack in "${NVIM_PACKS[@]}"; do
             echo "[ - ] installing nvim package ${pack} from ${!pack}"
             if [[ -d "$packsite/$pack" ]]; then
                 echo "[ - ] removing existing $packsite/$pack"
-                rm -rf "$packsite/$packsite/$pack"
+                rm -rf "${packsite}/${packsite}/${pack}"
             fi
             
             git clone ${!pack} $packsite/$pack
             
         done
         
-        if [[ ! -d "$HOME/.config/" ]]; then
-            echo "[ - ] creating directory ~/.config/nvim/"
-            mkdir -p ~/.config/
+        yn=""
+        if [[ ! -d "$HOME/.config/nvim" ]]; then
+            echo "[ - ] moving directory nvim/nvim/ to ~/.config/nvim/"
+            mv nvim "$HOME/.config/nvim"
+        else
+            read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
+            if [[ $yn = "y" ]]; then
+                echo "[ ok ] removing ~/config/nvim/ permanently"
+                rm -rf "${apps}/neovim"
+                echo "[ ok ] moving nvim/nvim/ to ~/config/nvim/"
+                mv nvim "$HOME/.config/nvim"
+            fi
         fi
-        
-        unlink ~/.config/nvim
-        
-        ln -s "$temp/nvim" "$HOME/.config/nvim/"
         
         cd "$temp"
         

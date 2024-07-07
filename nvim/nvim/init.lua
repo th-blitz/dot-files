@@ -1,4 +1,3 @@
---@diagnostic disable: undefined-global
 ----------------------------------------------------------------------------------------------------
 -- Author Preetham Rakshith (c) 2024.
 -- github profile : github.com/th-blitz
@@ -261,16 +260,6 @@ vim.opt.signcolumn = 'yes'
 
 -- you can add this in your init.lua
 -- (note: diagnostics are not exclusive to LSP)
-
--- Show diagnostics in a floating window
-vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
-
--- Move to the previous diagnostic
-vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-
--- Move to the next diagnostic
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
-
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
@@ -319,4 +308,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }  -- Add other options you need, but omit 'preview'
 
+-- set .sbatch files as `sh` filetype in nvim.
+-- vim.cmd('autocmd BufNewFile,BufRead *.sbatch set filetype=sh')
+
 ----------------------------------------------------------------------------------------------------
+--- Telescope 
+--- :Telescope find_files 
+vim.api.nvim_set_keymap('n', 'tff', ':Telescope find_files<CR>', { noremap = true, silent = true })
+--- :Telescope grep_string
+vim.api.nvim_set_keymap('n', 'tgs', ':Telescope grep_string<CR>', { noremap = true, silent = true })
+--- :undotreeToggle
+vim.api.nvim_set_keymap('n', 'utt', ':UndotreeToggle<CR>', { noremap = true, silent = true }) 
+--- :NvimTreeToggle
+vim.api.nvim_set_keymap('n', 'ntt', ':NvimTreeToggle<CR>', { noremap = true, silent = true }) 
+--- :1ToggleTerm
+vim.api.nvim_set_keymap('n', 'tt1', ':1ToggleTerm<CR>', { noremap = true, silent = true }) 
+--- :2ToggleTerm
+vim.api.nvim_set_keymap('n', 'tt2', ':2ToggleTerm<CR>', { noremap = true, silent = true }) 
+--- :3ToggleTerm
+vim.api.nvim_set_keymap('n', 'tt3', ':3ToggleTerm<CR>', { noremap = true, silent = true }) 
+

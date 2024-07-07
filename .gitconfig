@@ -1,7 +1,7 @@
 
 [user]
 	name = "th-blitz" 
-	email = "PreethamRakshith11@gmail.com"
+	email = ""
 [alias]
 	lg = log --decorate --graph --pretty=tformat:'%C(dim white)%m%C(dim green)%h %C(dim cyan)%cd %C(yellow)%<(12,trunc)%aN %C(reset)%s%C(auto)%w(0,0,9)%+d%C(reset)' --decorate --graph
 [log]
