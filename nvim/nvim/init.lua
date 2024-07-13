@@ -1,10 +1,8 @@
-----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 -- Author Preetham Rakshith (c) 2024.
 -- github profile : github.com/th-blitz
 -- My personal nvim config file. 
 ----------------------------------------------------------------------------------------------------
-
-USER_DIR = "/Users/preeth-raksh"
 
 
 -- from nvim-treesitter readme repo:
@@ -219,9 +217,11 @@ vim.o.splitbelow = true
 -- source : https://toddknutson.bio/posts/how-to-enable-neovim-undo-backup-and-swap-files-when-switching-linux-groups/
 -- purpose of this block : To create backups, swap files and persistent undo capabilities for edited files in nvim.
 
-BACKUP_DIR = USER_DIR .. "/.backups/nvim/backup/"
-SWAP_DIR = USER_DIR .. "/.backups/nvim/swap/"
-UNDO_DIR = USER_DIR .. "/.backups/nvim/undo/"
+vim.g.backups = vim.env.HOME .. "/.nvimcache/"
+
+BACKUP_DIR = vim.g.backups .. "backup/"
+SWAP_DIR = vim.g.backups .. "swap/"
+UNDO_DIR = vim.g.backups .. "undo/"
 
 if vim.fn.isdirectory(SWAP_DIR) == 0 then
     vim.fn.mkdir(SWAP_DIR, "p", "0o700")
@@ -312,19 +312,40 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }  -- Add other options yo
 -- vim.cmd('autocmd BufNewFile,BufRead *.sbatch set filetype=sh')
 
 ----------------------------------------------------------------------------------------------------
---- Telescope 
+
+-- Custome keybindings for most used plugins.
+
+vim.g.mapleader = " "
+
 --- :Telescope find_files 
-vim.api.nvim_set_keymap('n', 'tff', ':Telescope find_files<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>tf', ':Telescope find_files<CR>', { noremap = true, silent = false })
+
 --- :Telescope grep_string
-vim.api.nvim_set_keymap('n', 'tgs', ':Telescope grep_string<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>ts', ':Telescope grep_string<CR>', { noremap = true, silent = false })
+
 --- :undotreeToggle
-vim.api.nvim_set_keymap('n', 'utt', ':UndotreeToggle<CR>', { noremap = true, silent = true }) 
+vim.api.nvim_set_keymap('n', '<Leader>ut', ':UndotreeToggle<CR>', { noremap = true, silent = false })
+
 --- :NvimTreeToggle
-vim.api.nvim_set_keymap('n', 'ntt', ':NvimTreeToggle<CR>', { noremap = true, silent = true }) 
+vim.api.nvim_set_keymap('n', '<Leader>nt', ':NvimTreeToggle<CR>', { noremap = true, silent = false })
+
 --- :1ToggleTerm
-vim.api.nvim_set_keymap('n', 'tt1', ':1ToggleTerm<CR>', { noremap = true, silent = true }) 
+vim.api.nvim_set_keymap('n', '<Leader>tt', ':1ToggleTerm<CR>', { noremap = true, silent = false })
+
 --- :2ToggleTerm
-vim.api.nvim_set_keymap('n', 'tt2', ':2ToggleTerm<CR>', { noremap = true, silent = true }) 
+vim.api.nvim_set_keymap('n', '<Leader>2tt', ':2ToggleTerm<CR>', { noremap = true, silent = false })
+
 --- :3ToggleTerm
-vim.api.nvim_set_keymap('n', 'tt3', ':3ToggleTerm<CR>', { noremap = true, silent = true }) 
+vim.api.nvim_set_keymap('n', '<Leader>3tt', ':3ToggleTerm<CR>', { noremap = true, silent = false })
+
+--- :qa! 
+vim.api.nvim_set_keymap('n', '<Leader>qa', ':qa!<CR>', { noremap = true, silent = false })
+
+-- :w
+vim.api.nvim_set_keymap('n', '<Leader>s', ':w<CR>', { noremap = true, silent = false })
+
+-- remap terminal esc. 
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = false })
+
+----------------------------------------------------------------------------------------------------
 
