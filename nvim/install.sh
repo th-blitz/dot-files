@@ -99,14 +99,14 @@ else
         yn=""
         if [[ ! -d "$HOME/.config/nvim" ]]; then
             echo "[ - ] moving directory nvim/nvim/ to ~/.config/nvim/"
-            mv -r nvim/ "$HOME/.config/nvim"
+            cp -r nvim/ "$HOME/.config/nvim"
         else
             read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
             if [[ $yn = "y" ]]; then
                 echo "[ ok ] removing ~/config/nvim/ permanently"
                 rm -rf "$HOME/.config/nvim"
                 echo "[ ok ] moving nvim/nvim/ to ~/config/nvim/"
-                mv nvim "$HOME/.config/nvim"
+                cp -r nvim "$HOME/.config/nvim"
             fi
         fi
 
