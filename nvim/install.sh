@@ -17,14 +17,14 @@ else
     fi
 
     if [[ -d $apps/neovim ]]; then
-        [[ $yn != 'y' ]] && read -r -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ? : " yn
+        [[ $yn = 'y' ]] || read -r -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ? : " yn
         if [[ $yn = "y" ]]; then
             echo "[ ok ] removing neovim installation at $apps/neovim"
             rm -rf "$apps/neovim"
             echo "[ ok ] re-installing neovim"
         fi
     else
-        read -p "[ ? ] do you want to install neovim at $apps/neovim ( y / n ) ? : " yn
+        [[ $yn = 'y' ]] || read -p "[ ? ] do you want to install neovim at $apps/neovim ( y / n ) ? : " yn
         if [[ $yn = "y" ]]; then
             echo "[ ok ] installing neovim at $apps/neovim"
         fi
@@ -92,7 +92,7 @@ else
             echo "[ --- ] moving directory nvim/nvim/ to ~/.config/nvim/"
             cp -r nvim/ "$HOME/.config/nvim"
         else
-            read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
+            [[ $yn = 'y' ]] || read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
             if [[ $yn = "y" ]]; then
                 echo "[ xxx ] removing ~/config/nvim/ permanently"
                 rm -rf "$HOME/.config/nvim"
