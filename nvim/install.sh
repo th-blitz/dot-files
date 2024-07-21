@@ -1,51 +1,35 @@
 #!/bin/bash
 
+apps="$1"
+neovim="https://github.com/neovim/neovim.git"
+
 if [[ -z "${apps+x}" ]]; then
-
     echo '[ not ok ! ] no $apps'
-
 elif [[ -z "$apps" ]]; then
-
     echo '[ not ok ! ] empty $apps'
-
 elif [[ ! -d "$apps" ]]; then
-
     echo "[ not ok ! ] directory $apps does not exist"
-    
 else 
     yn=""
-    
     if [[ -d $apps/neovim ]]; then
-    
-        read -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ?" yn
-    
+        read -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ? : " yn
         if [[ $yn = "y" ]]; then
             echo "[ ok ] removing neovim installation at $apps/neovim"
-            rm -rf $apps/neovim
+            rm -rf "$apps/neovim"
             echo "[ ok ] re-installing neovim"
         fi
     else
-    
-        read -p "[ ? ] do you want to install neovim at $apps/neovim ( y / n ) ?" yn
-        
+        read -p "[ ? ] do you want to install neovim at $apps/neovim ( y / n ) ? : " yn
         if [[ $yn = "y" ]]; then
             echo "[ ok ] installing neovim at $apps/neovim"
         fi
     fi
-    
     if [[ $yn = "y" ]]; then
         
-        temp=$(pwd)
-        cd $apps
-        git clone https://github.com/neovim/neovim.git
-        cd neovim
-        git checkout stable
-        make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$apps/neovim
-        make install
-        
-        
-        vimbin="PATH=$apps/neovim/bin"
-        echo "PATH=$vimbin:\$PATH" >> ~/.bashrc
+        git -C "$apps" clone "${neovim}" neovim
+        git -C "$apps/neovim" checkout stable
+        make -C "$apps/neovim" CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX="$apps/neovim"
+        make -C "$apps/neovim" install
         
         packsite="$HOME/.local/share/nvim/site/pack/dot-files/start/"
         
@@ -84,26 +68,24 @@ else
         )
         
         for pack in "${NVIM_PACKS[@]}"; do
-            echo "[ - ] installing nvim package ${pack} from ${!pack}"
+            echo "[ --- ] installing nvim package ${pack} from ${!pack}"
             if [[ -d "$packsite/$pack" ]]; then
-                echo "[ - ] removing existing ${packsite}${pack}"
+                echo "[ xxx ] removing existing ${packsite}${pack}"
                 rm -rf "${packsite}${pack}"
             fi
             
             git clone ${!pack} $packsite/$pack
             
         done
-        
-        cd "$temp"
 
         yn=""
         if [[ ! -d "$HOME/.config/nvim" ]]; then
-            echo "[ - ] moving directory nvim/nvim/ to ~/.config/nvim/"
+            echo "[ --- ] moving directory nvim/nvim/ to ~/.config/nvim/"
             cp -r nvim/ "$HOME/.config/nvim"
         else
             read -p "[ ? ] do you want to overwrite ~/.config/nvim permanently ?? ( y / n ) : " yn
             if [[ $yn = "y" ]]; then
-                echo "[ ok ] removing ~/config/nvim/ permanently"
+                echo "[ xxx ] removing ~/config/nvim/ permanently"
                 rm -rf "$HOME/.config/nvim"
                 echo "[ ok ] moving nvim/nvim/ to ~/config/nvim/"
                 cp -r nvim "$HOME/.config/nvim"
@@ -112,7 +94,7 @@ else
 
         export_path_var="export PATH=${apps}/neovim/bin"
         path_var=':$PATH'
-        echo "${export_path_var}${path_var}" >> $HOME/.bashrc
+        echo "${export_path_var}${path_var}" >> "$HOME/.bashrc"
         
         echo "[ ok ] installed neovim."
     else
