@@ -1,6 +1,7 @@
 #!/bin/bash
 
 apps="$1"
+all_yes="$2"
 neovim="https://github.com/neovim/neovim.git"
 
 if [[ -z "${apps+x}" ]]; then
@@ -11,6 +12,10 @@ elif [[ ! -d "$apps" ]]; then
     echo "[ not ok ! ] directory $apps does not exist"
 else 
     yn=""
+    if [[ "$all_yes" = "-y" ]]; then 
+        yn='y'
+    fi
+
     if [[ -d $apps/neovim ]]; then
         read -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ? : " yn
         if [[ $yn = "y" ]]; then
@@ -28,8 +33,8 @@ else
         
         git -C "$apps" clone "${neovim}" neovim
         git -C "$apps/neovim" checkout stable
-        make -C "$apps/neovim" CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX="$apps/neovim"
-        make -C "$apps/neovim" install
+        make -C "$apps/neovim" CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX="$apps/neovim" -j$(nproc)
+        make -C "$apps/neovim" install -j$(nproc)
         
         packsite="$HOME/.local/share/nvim/site/pack/dot-files/start/"
         
@@ -79,6 +84,10 @@ else
         done
 
         yn=""
+        if [[ $all_yes = "-y" ]]; then 
+            yn="y"
+        fi
+
         if [[ ! -d "$HOME/.config/nvim" ]]; then
             echo "[ --- ] moving directory nvim/nvim/ to ~/.config/nvim/"
             cp -r nvim/ "$HOME/.config/nvim"
