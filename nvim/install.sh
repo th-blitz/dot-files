@@ -17,7 +17,7 @@ else
     fi
 
     if [[ -d $apps/neovim ]]; then
-        read -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ? : " yn
+        [[ $yn != 'y' ]] && read -r -p "[ ? ] installation already exists | do you want to re-install ( y / n ) ? : " yn
         if [[ $yn = "y" ]]; then
             echo "[ ok ] removing neovim installation at $apps/neovim"
             rm -rf "$apps/neovim"
